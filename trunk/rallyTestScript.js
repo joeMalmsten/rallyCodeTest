@@ -14,10 +14,46 @@ Members: conversionList - a list containing objects with information on all prev
                    queries
 \*****************************************************************************/
 function CurrencyContainer() {
-   // Contains all previous function calls(input, output)
-   this.conversionList = [];
-   this.MIN_BOUNDARY = -1000000000000000;
-   this.MAX_BOUNDARY = 1000000000000000;
+	// Contains all previous function calls(input, output)
+	this.conversionList = [];
+	this.MIN_BOUNDARY = -1000000000000000;
+	this.MAX_BOUNDARY = 1000000000000000;
+	this.ONES_INDEX_ARRAY = [ 
+   		'',
+   		'one',
+   		'two',
+   		'three',
+   		'four',
+   		'five',
+   		'six',
+   		'seven',
+   		'eight',
+   		'nine'
+   	];
+   	this.TEENS_INDEX_ARRAY = [
+   		'ten',
+   		'eleven',
+   		'twelve',
+   		'thirteen',
+   		'fourteen',
+   		'fifteen',
+   		'sixteen',
+   		'seventeen',
+   		'eighteen',
+   		'nineteen'
+   	];
+   	this.TENS_INDEX_ARRAY = [
+   		'',
+   		'',
+   		'twenty',
+   		'thirty',
+   		'forty',
+   		'fifty',
+   		'sixty',
+   		'seventy',
+   		'eighty',
+   		'ninety'
+   	]; 
 }
 
 // converts the given number to an english worded currency, main workhorse function
@@ -26,8 +62,50 @@ CurrencyContainer.prototype.convertToCurrency = function(value) {
 	if (typeof(value) !== "number" || value < this.MIN_BOUNDARY || value > this.MAX_BOUNDARY) {
 		return -1;
 	}
+	var result = "";
+	if (value < 0) {
+		value *= -1;
+		result += "negative ";
+	}
 
-	return value;
+	result += this.convertNumber(Math.floor(value));
+
+	// This calculation gets any numbers right of the decimal and multiplies them by 100 to make them whole numbers
+	// The toFixed call is added to removed any floating point errors we might get
+	var centsValue = Math.floor((value % 1).toFixed(2) * 100);
+	if (centsValue >= 10) {
+		result += " and " + centsValue + "/100";
+	} else {
+		result += " and 0" +  centsValue + "/100";
+	}
+	result += " dollars";
+
+	return result;
+}
+
+CurrencyContainer.prototype.convertHundreds = function(value) {
+    if (value >= 100) {
+        return this.ONES_INDEX_ARRAY[Math.floor(value / 100)] + " hundred " + this.convertTens(value % 100);
+    } else {
+        return this.convertTens(value);
+    }
+}
+
+CurrencyContainer.prototype.convertTens = function(value){
+    if ( value < 10) {
+		return this.ONES_INDEX_ARRAY[value];
+	} else if (value>=10 && value<20) {
+		return this.TEENS_INDEX_ARRAY[value - 10];
+	} else {
+        return this.TENS_INDEX_ARRAY[Math.floor(value / 10)] + " " + this.ONES_INDEX_ARRAY[value % 10];
+    }
+}
+
+CurrencyContainer.prototype.convertNumber = function(value){
+    if (value === 0) {
+    	return "zero";
+    }
+    return this.convertHundreds(value);
 }
 
 // This function will call the main conversion function, log the result in our array and return the result object
@@ -157,19 +235,23 @@ myContent.initTestPage();
 //-------------------------- Start unit testing -----------------------------\\
 var assert = require("assert");
 describe ("CurrencyContainer.convertToCurrency():", function() {
-	it ("should return the english string of a given number [-1 * 10^18, 10^18]", function() {
+	it ("should return the english string of a given number [-1 * 10^16, 10^16]", function() {
 		// An array containing possible converstion values and thier converted currency
-		var currencyTestArray = [[0, "zero dollars 00/100 cents"], [0.15, "zero dollars 15/100 cents"], [0.154, "zero dollars 15/100 cents"], [0.159, "zero dollars 15/100 cents"],
-		[1, "one dollar 00/100 cents"], [1.01, "one dollar 01/100 cent"], [0.01, "zero dollars 01/100 cent"],];
+		var currencyTestArray = [[0, "zero and 00/100 dollars"], [0.00, "zero and 00/100 dollars"], [0.15, "zero and 15/100 dollars"], [0.154, "zero and 15/100 dollars"], [0.159, "zero and 16/100 dollars"],
+		[1, "one and 00/100 dollars"], [1.01, "one and 01/100 dollars"], [0.01, "zero and 01/100 dollars"], [11.01, "eleven and 01/100 dollars"], [111.01, "one hundred eleven and 01/100 dollars"], 
+		[221.01, "two hundred twenty one and 01/100 dollars"], [911.01, "nine hundred eleven and 01/100 dollars"], [999.99, "nine hundred ninety nine and 99/100 dollars"], 
+		[-0, "zero and 00/100 dollars"], [-0.00, "zero and 00/100 dollars"], [-0.15, "negative zero and 15/100 dollars"], [-0.154, "negative zero and 15/100 dollars"], [-0.159, "negative zero and 16/100 dollars"],
+		[-1, "negative one and 00/100 dollars"], [-1.01, "negative one and 01/100 dollars"], [-0.01, "negative zero and 01/100 dollars"], [-11.01, "negative eleven and 01/100 dollars"], [-111.01, "negative one hundred eleven and 01/100 dollars"], 
+		[-221.01, "negative two hundred twenty one and 01/100 dollars"], [-911.01, "negative nine hundred eleven and 01/100 dollars"], [-999.99, "negative nine hundred ninety nine and 99/100 dollars"]];
 
 		var retval = -1;
 		for (var i = 0; i < currencyTestArray.length; ++i) {
 			retval = myContent.currencyContainer.convertToCurrency(currencyTestArray[i][0]);
-			assert.equal(retval, currencyTestArray[i][0]);
+			assert.equal(retval, currencyTestArray[i][1]);
 		}
 	});
 
-	it ("should return -1 at any index not a non-number or number outside of our bounds [-1 * 10^18, 10^18]", function() {
+	it ("should return -1 at any index not a non-number or number outside of our bounds [-1 * 10^16, 10^16]", function() {
 		// An array containing all invalid inputs
 		var currencyInputArray = ["test", "djflsj;df", "12x2", "0x", "", null, "0", "1", false, true, 10000000000000001, -10000000000000001];
 
