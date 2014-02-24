@@ -32,16 +32,16 @@ button {
   font-weight: bold;
 }
 .button.one {
-  width: 120px;
+  width: 140px;
   left: 10px;
 }
 .button.two {
   width: 100px;
-  left: 140px;
+  left: 160px;
 }
 .button.three {
   width: 70px;
-  left: 250px;
+  left: 270px;
 }
 .testInputForm {
   margin: 0 auto;
