@@ -280,7 +280,7 @@ var myContent = new MyContent();
 myContent.initTestPage();
 //------------------------------- End code ----------------------------------\\
 
-/********* Comment this section out when we want to run our website **********/
+/********* Comment this section out when we want to run our website **********\
 //-------------------------- Start unit testing -----------------------------\\
 var assert = require("assert");
 describe ("CurrencyContainer.convertToCurrency():", function() {
@@ -343,4 +343,4 @@ describe ("CurrencyContainer.convertToCurrency():", function() {
 	});
 });
 //---------------------------- End unit testing -----------------------------\\
-/*****************************************************************************/
+\*****************************************************************************/
