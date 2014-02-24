@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="rallyTestStyle.css">
+		<title>index for test repo</title>
+	</head>
+
+	<body>
+		<div id="testInputArea">
+			<form name="testInputForm">
+				<h1>Javascript function Input</h1>
+				<p>Input parameters and run the javascript functions from here. Function descriptions below</p>
+
+				<label> Number to Currency
+					<span class="small">number < Quintillion</span>
+				</label>
+				<input id="currencyNumber" type="number" value="currencyNumber" min="0">
+			</form>
+			<div class="buffer"></div>
+		</div>
+		<textarea id="debugLog" class="textArea" readonly></textarea>
+		<div id='currencyNumberButton' class='button one' type='button'>Get currency value</div>
+		<div id='dumpHistoryButton' class='button two' type='button'>Dump history</div>
+		<div id='clearLogButton' class='button three' type='button'>Clear log</div>
+		<script src="rallyTestScript.js"></script>
+	</body>
+</html>
