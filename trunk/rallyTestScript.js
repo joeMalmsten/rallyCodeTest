@@ -280,7 +280,7 @@ var myContent = new MyContent();
 myContent.initTestPage();
 //------------------------------- End code ----------------------------------\\
 
-/********* Comment this section out when we want to run our website **********\
+/********* Comment this section out when we want to run our website **********/
 //-------------------------- Start unit testing -----------------------------\\
 var assert = require("assert");
 describe ("CurrencyContainer.convertToCurrency():", function() {
@@ -304,6 +304,7 @@ describe ("CurrencyContainer.convertToCurrency():", function() {
 		[99999999999.99, "ninety nine billion nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine and 99/100 dollars"], 
 		[999999999999.99, "nine hundred ninety nine billion nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine and 99/100 dollars"],
 		[9999999999999.99, "nine quadrillion nine hundred ninety nine billion nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine and 99/100 dollars"],
+		[1234567890123.38, "one quadrillion two hundred thirty four billion five hundred sixty seven million eight hundred ninety thousand one hundred twenty three and 38/100 dollars"],
 		[10000000000000, "ten quadrillion and 00/100 dollars"],
 		[-999.99, "negative nine hundred ninety nine and 99/100 dollars"],
 		[-9999.99, "negative nine thousand nine hundred ninety nine and 99/100 dollars"], 
@@ -316,6 +317,7 @@ describe ("CurrencyContainer.convertToCurrency():", function() {
 		[-99999999999.99, "negative ninety nine billion nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine and 99/100 dollars"], 
 		[-999999999999.99, "negative nine hundred ninety nine billion nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine and 99/100 dollars"],
 		[-9999999999999.99, "negative nine quadrillion nine hundred ninety nine billion nine hundred ninety nine million nine hundred ninety nine thousand nine hundred ninety nine and 99/100 dollars"],
+		[-1234567890123.38, "negative one quadrillion two hundred thirty four billion five hundred sixty seven million eight hundred ninety thousand one hundred twenty three and 38/100 dollars"],
 		[-10000000000000, "negative ten quadrillion and 00/100 dollars"]];
 
 		//test our actual value to the value stored in the second index od each test array, the first index is the input for each test
@@ -341,4 +343,4 @@ describe ("CurrencyContainer.convertToCurrency():", function() {
 	});
 });
 //---------------------------- End unit testing -----------------------------\\
-\*****************************************************************************/
+/*****************************************************************************/
