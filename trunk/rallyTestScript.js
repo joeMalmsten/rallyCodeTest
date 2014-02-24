@@ -2,7 +2,7 @@
   Title: rallyTestScript.js
  Author: Joseph Malmsten
 Purpose: coding test for Rally Software
-   Date: 2/23/2014
+   Date: 2/24/2014
 \*****************************************************************************/
 
 //--------------------------- Object definitions ----------------------------\\ 
@@ -88,38 +88,34 @@ CurrencyContainer.prototype.convertToCurrency = function(value) {
 	return result;
 }
 
-CurrencyContainer.prototype.convertQuadrillion = function(value){
+CurrencyContainer.prototype.convertQuadrillion = function(value) {
     if (value >= this.QUADRILLION) {
         return this.convertQuadrillion(Math.floor(value / this.QUADRILLION)) + "quadrillion " + this.convertBillions(value % this.QUADRILLION);
-    }
-    else {
+    } else {
         return this.convertBillions(value);
     }
 }
 
-CurrencyContainer.prototype.convertBillions = function(value){
+CurrencyContainer.prototype.convertBillions = function(value) {
     if (value >= this.BILLION) {
         return this.convertBillions(Math.floor(value / this.BILLION)) + "billion " + this.convertMillions(value % this.BILLION);
-    }
-    else {
+    } else {
         return this.convertMillions(value);
     }
 }
 
-CurrencyContainer.prototype.convertMillions = function(value){
+CurrencyContainer.prototype.convertMillions = function(value) {
     if (value >= this.MILLION) {
         return this.convertMillions(Math.floor(value / this.MILLION)) + "million " + this.convertThousands(value % this.MILLION);
-    }
-    else {
+    } else {
         return this.convertThousands(value);
     }
 }
 
-CurrencyContainer.prototype.convertThousands = function(value){
+CurrencyContainer.prototype.convertThousands = function(value) {
     if (value >= this.THOUSAND) {
         return this.convertThousands(Math.floor(value / this.THOUSAND)) + "thousand " + this.convertHundreds(value % this.THOUSAND);
-    }
-    else{
+    } else {
         return this.convertHundreds(value);
     }
 }
@@ -135,17 +131,19 @@ CurrencyContainer.prototype.convertHundreds = function(value) {
 CurrencyContainer.prototype.convertTens = function(value){
     if ( value < 10) {
     	var ret = this.ONES_INDEX_ARRAY[value];
-    	if (value > 0){
+    	if (value > 0) {
     		ret += " ";
     	}
+
 		return ret;
 	} else if (value>=10 && value<20) {
 		return this.TEENS_INDEX_ARRAY[value - 10] + " ";
 	} else {
         var ret = this.TENS_INDEX_ARRAY[Math.floor(value / 10)] + " " + this.ONES_INDEX_ARRAY[value % 10];
-        if ((value % 10) > 0){
+        if ((value % 10) > 0) {
     		ret += " ";
     	}
+
 		return ret;
     }
 }
@@ -248,7 +246,7 @@ MyContent.prototype.clearLog = function() {
 //   everything else should be Handled through event listeners
 MyContent.prototype.initTestPage = function() {
 	// This is here to make unit testing possible without having to comment out any code
-	if(typeof(document) == "undefined"){
+	if (typeof(document) == "undefined") {
 		return;
 	}
 
